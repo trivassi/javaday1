@@ -3,36 +3,41 @@ class Parcel {
   public int mHeight;
   public int mWidth;
   public int mLength;
+  public boolean mGiftWrapping = false;
+  public String mShippingSpeed;
+  public String mShippingDistance;
 
+  public float mCost;
 
-
-  public Parcel(int weight, int height, int width, int length){
+  public Parcel(int weight, int height, int width, int length, String shippingSpeed, String shippingDistance){
     mWeight = weight;
     mHeight = height;
     mWidth = width;
     mLength = length;
+    mShippingSpeed = shippingSpeed;
+    mShippingDistance = shippingDistance;
   }
 
   public int Volume (){
     return(mWidth * mHeight * mLength);
   }
 
-  public int costToShip (String speed, String distance){
+  public int costToShip (){
     int cost = 0;
 
-    if (speed.equals("Tomorrow")) {
+    if (mShippingSpeed.equals("Tomorrow")) {
       cost += 20;
-    } else if (speed.equals("3 days")) {
+    } else if (mShippingSpeed.equals("3 days")) {
       cost += 10;
-    } else if (speed.equals("1 week")) {
+    } else if (mShippingSpeed.equals("1 week")) {
       cost += 5;
     } else {
-      System.out.println("Not an option. Please enter: Tomorrow, 3 days or 1 week");
+      System.out.println("Shipping Speed is invalid");
     }
 
-    if (distance.equals("National")) {
+    if (mShippingDistance.equals("National")) {
       cost += 2;
-    } else if (distance.equals("International")) {
+    } else if (mShippingDistance.equals("International")) {
       cost += 20;
     }
 
@@ -43,12 +48,14 @@ class Parcel {
     } else {
       cost += 5;
     }
-
+    mCost = cost;
     return cost;
   }
 
-  public float CalcGiftWrap (){
-    int surfaceArea = (2*mHeight*mLength)+(2*mHeight*mWidth)+(2*mLength*mWidth);
-    return(.25*surfaceArea);
+  public double CalcGiftWrap (){
+    double surfaceArea = (2*mHeight*mLength)+(2*mHeight*mWidth)+(2*mLength*mWidth);
+    double gwCost = surfaceArea * .25;
+    mGiftWrapping = true;
+    return(gwCost);
   }
 }
